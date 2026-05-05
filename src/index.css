@@ -1,0 +1,49 @@
+:root {
+  --color-pink: #ffd1dc;
+  --color-pink-dark: #ffb6c1;
+  --color-blue: #add8e6;
+  --color-blue-dark: #87cefa;
+  --color-white: rgba(255, 255, 255, 0.85);
+  --color-text: #5a5a5a;
+  --font-cute: 'Nunito', 'ZCOOL KuaiLe', 'Comic Sans MS', 'PingFang SC', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-cute);
+  color: var(--color-text);
+  /* 使用上传的照片作为背景 */
+  background: url('/assets/bg.jpg') center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color-scheme: light; /* 强制浅色模式 */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-cute);
+  font-weight: normal;
+}
+
+button {
+  font-family: var(--font-cute);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* Glassmorphism 样式基础 */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  border-radius: 24px;
+}

@@ -1,0 +1,321 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0 2rem 0;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* 首屏区域 */
+.hero-section {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  animation: float 4s ease-in-out infinite;
+  z-index: 10; /* 确保在樱花特效之上 */
+}
+
+.hero-title {
+  font-size: 3rem;
+  color: #ff85a2;
+  text-shadow: 2px 2px 8px rgba(255, 133, 162, 0.5), 0 0 20px rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  padding: 0 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #5577a1;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* 心形照片墙容器 */
+.heart-wall-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  z-index: 10; /* 在樱花特效上方 */
+}
+
+/* 核心 CSS Grid 布局：8 列 x 7 行 */
+.heart-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 8px; /* 缩小间距，看起来更紧凑 */
+  width: 90vw; /* 限制最大宽度，整体尺寸缩小 */
+  max-width: 600px; /* 控制最终渲染大小，放在正中心不挡背景人物 */
+  aspect-ratio: 8 / 7; /* 保持心形的整体长宽比 */
+}
+
+.heart-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease;
+  background: white;
+  aspect-ratio: 1 / 1; /* 强制每个格子正方形 */
+}
+
+.heart-item:hover {
+  transform: scale(1.3);
+  z-index: 20; /* 悬浮时放在最上面 */
+  box-shadow: 0 10px 25px rgba(255, 133, 162, 0.6);
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* 保证缩略图正方形裁剪，保留中间内容不被拉伸 */
+  object-position: center center;
+}
+
+@media (max-width: 600px) {
+  .heart-grid {
+    gap: 4px;
+    max-width: 95vw;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+}
+
+/* 大图预览 Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  padding: 1rem;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.open .modal-content {
+  transform: scale(1);
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
+.modal-caption {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  color: #ff85a2;
+  font-weight: bold;
+}
+
+.close-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff85a2;
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(255, 133, 162, 0.4);
+}
+
+.close-btn:hover {
+  background: #ff6b8f;
+  transform: scale(1.1);
+}
+
+/* 相爱计时器 */
+.love-counter {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #ff6b8f;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(255, 133, 162, 0.3);
+  display: inline-block;
+  backdrop-filter: blur(5px);
+}
+
+.love-counter span {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin: 0 4px;
+}
+
+/* 情书彩蛋 Modal */
+.letter-content {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  background: #fff0f3;
+  box-shadow: 0 20px 60px rgba(255, 133, 162, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  border: 4px solid #ffb6c1;
+}
+
+.letter-modal.open .letter-content {
+  transform: scale(1);
+}
+
+.letter-content h2 {
+  color: #ff6b8f;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  border-bottom: 2px dashed #ffb6c1;
+  padding-bottom: 0.5rem;
+}
+
+.letter-text {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.8;
+  white-space: pre-wrap; /* 保持换行格式 */
+  text-align: left;
+  width: 100%;
+}
+
+/* 音乐播放器 (迷你黑胶唱片) */
+.music-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vinyl-record {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #222 0%, #111 60%, #333 70%, #111 100%);
+  border: 2px solid white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.vinyl-center {
+  width: 16px;
+  height: 16px;
+  background: #ff85a2;
+  border-radius: 50%;
+  border: 3px solid #eee;
+}
+
+.music-player.playing .vinyl-record {
+  animation: spin 4s linear infinite;
+}
+
+.music-note {
+  position: absolute;
+  top: -15px;
+  right: -10px;
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.music-player.playing .music-note {
+  animation: floatNote 2s ease-out infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes floatNote {
+  0% { opacity: 0; transform: translateY(0) scale(0.8) rotate(-10deg); }
+  50% { opacity: 1; transform: translateY(-20px) scale(1) rotate(10deg); }
+  100% { opacity: 0; transform: translateY(-40px) scale(1.2) rotate(-20deg); }
+}
+
+/* 撒爱心特效 */
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1.5rem;
+  z-index: 9999;
+  animation: explodeHeart 1s ease-out forwards;
+}
+
+@keyframes explodeHeart {
+  0% { 
+    transform: translate(-50%, -50%) scale(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.5); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translate(calc(-50% + var(--dx) * 1.5), calc(-50% + var(--dy) * 1.5 - 50px)) scale(0); 
+    opacity: 0; 
+  }
+}
+
